@@ -1,14 +1,14 @@
-# Predictive Analysis Using Machine Learning Models
+# predictive_analysis
 
-This project compares multiple supervised machine learning models for a structured predictive analysis task. The experiment uses an IoT-style sensor dataset and predicts `energy_kwh` from device, environment, and operating measurements.
+This project looks at how different machine learning models perform on a predictive analysis problem. It uses an IoT-style sensor dataset and predicts `energy_kwh` based on device activity, environmental readings, and operating measurements.
 
 ## Project Files
 
-- `predictive_analysis.py` - main Python script for data generation, preprocessing, training, evaluation, and plotting.
-- `colab_runner.ipynb` - optional Google Colab notebook that installs dependencies and runs the script.
-- `data/iot_sensor_energy.csv` - testable sample dataset used by the experiment.
-- `requirements.txt` - Python package dependencies.
-- `outputs/` - generated model metrics and plots after running the script.
+- `predictive_analysis.py` - main Python script used to prepare the data, train the models, evaluate results, and create plots.
+- `colab_runner.ipynb` - optional Google Colab notebook with the run steps already organized.
+- `data/iot_sensor_energy.csv` - sample dataset used for testing the project.
+- `requirements.txt` - list of Python libraries needed to run the project.
+- `outputs/` - folder where the results and plots are saved after the script runs.
 
 ## Models Evaluated
 
@@ -19,7 +19,7 @@ This project compares multiple supervised machine learning models for a structur
 
 ## Evaluation Metrics
 
-The script reports:
+The results are compared using:
 
 - Mean Squared Error (MSE)
 - Root Mean Squared Error (RMSE)
@@ -31,49 +31,51 @@ The script reports:
 
 ## How to Run in Google Colab
 
-Google Colab is the intended execution environment for this project.
+This project is meant to be run in Google Colab. The easiest way is to upload the project zip file directly into a Colab session.
 
-### Option 1: Run with the Included Colab Notebook
+1. Open a new notebook at https://colab.research.google.com.
+2. Upload `predictive_analysis.zip` manually through the Colab upload prompt.
+3. Unzip the project folder.
+4. Install the required libraries.
+5. Run the Python script and review the saved results.
 
-1. Upload the full project folder to Google Drive.
-2. Open `colab_runner.ipynb` in Google Colab.
-3. Run each notebook cell from top to bottom.
-4. Check `outputs/model_results.csv` and the two generated plot images after execution.
-
-### Option 2: Run Commands in a New Colab Notebook
-
-1. Upload the full project folder to Google Drive.
-2. Open a new Google Colab notebook.
-3. Mount Google Drive:
+Use these cells in Colab:
 
 ```python
-from google.colab import drive
-drive.mount('/content/drive')
+from google.colab import files
+uploaded = files.upload()
 ```
-
-4. Change into the project directory. Update the path if your folder name is different:
 
 ```python
-%cd /content/drive/MyDrive/New project
+!unzip predictive_analysis.zip
 ```
 
-5. Install the required libraries:
+```python
+%cd predictive_analysis
+```
 
 ```python
 !pip install -r requirements.txt
 ```
 
-6. Run the experiment:
-
 ```python
 !python predictive_analysis.py --data data/iot_sensor_energy.csv --output outputs
 ```
 
-7. Review the generated files:
+After the script finishes, use this cell to view the model results:
 
 ```python
 import pandas as pd
 pd.read_csv("outputs/model_results.csv")
+```
+
+Use this cell to display the two saved plots:
+
+```python
+from IPython.display import Image, display
+
+display(Image(filename="outputs/model_rmse_comparison.png"))
+display(Image(filename="outputs/actual_vs_predicted_best_model.png"))
 ```
 
 The plots will be saved as:
@@ -83,13 +85,13 @@ The plots will be saved as:
 
 ## Regenerating the Dataset
 
-The included dataset is reproducible. To recreate it:
+The included dataset can be recreated from the script. To generate it again:
 
 ```bash
 python predictive_analysis.py --generate-data --data data/iot_sensor_energy.csv --rows 480
 ```
 
-To regenerate the data and immediately run the experiment:
+To generate the data and immediately run the experiment:
 
 ```bash
 python predictive_analysis.py --generate-data --run-after-generate --data data/iot_sensor_energy.csv --output outputs
@@ -97,7 +99,7 @@ python predictive_analysis.py --generate-data --run-after-generate --data data/i
 
 ## Dataset Description
 
-The dataset contains structured IoT-style sensor readings:
+The dataset contains structured IoT-style sensor readings. Each row represents one sensor record:
 
 - `device_id` - device category identifier.
 - `hour` - hour of the day.
@@ -108,6 +110,6 @@ The dataset contains structured IoT-style sensor readings:
 - `current_a` - current measurement.
 - `occupancy_count` - estimated occupancy near the device.
 - `maintenance_flag` - whether a maintenance condition was observed.
-- `energy_kwh` - target value predicted by the models.
+- `energy_kwh` - target value that the models predict.
 
-The script handles missing numeric values using mean imputation, scales numeric features, encodes categorical features, splits the dataset into 80% training and 20% testing, and applies 5-fold cross-validation for reliability.
+Before training, the script fills missing numeric values, scales numeric features, encodes categorical fields, and splits the data into 80% training and 20% testing. It also uses 5-fold cross-validation to make the comparison more reliable.

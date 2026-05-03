@@ -367,7 +367,10 @@ def parse_args() -> argparse.Namespace:
         default=42,
         help="Random seed for reproducible data generation and train/test split.",
     )
-    return parser.parse_args()
+    args, unknown_args = parser.parse_known_args()
+    if unknown_args:
+        print(f"Ignoring notebook/runtime arguments: {' '.join(unknown_args)}")
+    return args
 
 
 def main() -> None:
