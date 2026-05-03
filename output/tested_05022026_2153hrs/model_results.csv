@@ -1,0 +1,5 @@
+model,mse,rmse,mae,r2_score,cv_rmse,training_time_seconds,prediction_time_seconds
+Linear Regression,0.05159,0.22714,0.18697,0.88146,0.24274,0.04095,0.00781
+Random Forest,0.0825,0.28722,0.22147,0.81045,0.31331,0.5013,0.06142
+Support Vector Regression,0.10189,0.3192,0.26314,0.7659,0.33824,0.04645,0.01286
+Decision Tree,0.13975,0.37383,0.29092,0.67891,0.438,0.01465,0.00652
